@@ -10,41 +10,38 @@ test('DL-001 - Verify latest release download link saves to disk and file exists
 
   await downloadPage.goto();
 
-  // 1. Scroll to 'Latest releases' section
   await downloadPage.scrollToLatestReleases();
   await expect(downloadPage.latestSection).toBeVisible();
 
-  // 2. Check that the table contains the latest release
   const releaseRow = downloadPage.getReleaseRow(latestRelease);
   await expect(releaseRow).toBeVisible();
 
-  // 3. Check both .tar.gz and .zip links exist
   await expect(downloadPage.getTarGzLink(latestRelease)).toBeVisible();
   await expect(downloadPage.getZipLink(latestRelease)).toBeVisible();
 
-  // 4. Click the .zip link and verify download triggered
+  //Click the .zip link and verify download triggered
   const [ download ] = await Promise.all([
     page.waitForEvent('download'),
     downloadPage.clickZipLink(latestRelease)
   ]);
 
-  // Очікуване ім’я файлу
+  // Expected file name
   const expectedFilename = `${latestRelease}.zip`;
   expect(await download.suggestedFilename()).toBe(expectedFilename);
 
-  // Додано: зберігаємо файл у локальну папку ./download
+  // Added: save file to local folder ./download
   const downloadDir = path.resolve(process.cwd(), 'download');
   const savePath = path.join(downloadDir, expectedFilename);
 
-  // Створити папку, якщо не існує
+  // Create folder if it doesn't exist
   if (!fs.existsSync(downloadDir)) {
     fs.mkdirSync(downloadDir, { recursive: true });
   }
 
-  // Зберігаємо файл
+  // Save the file
   await download.saveAs(savePath);
 
-  // Перевіряємо, що файл існує
+  // Check that the file exists
   const fileExists = fs.existsSync(savePath);
   expect(fileExists).toBe(true);
 });
