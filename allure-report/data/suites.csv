@@ -1,0 +1,2 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","2158","Filter issues by ""Resolved"" status","","Thu Jul 24 11:19:07 CEST 2025","passed","Thu Jul 24 11:19:09 CEST 2025","","FilterByStatus.spec.ts","",""
