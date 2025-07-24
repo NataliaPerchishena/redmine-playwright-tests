@@ -1,1 +1,6 @@
 test-results/
+# Allure raw results and reports
+allure-results/
+allure-report/
+public/
+
