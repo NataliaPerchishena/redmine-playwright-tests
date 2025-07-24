@@ -1,0 +1,7 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","6326","AUTH-001 - Check Sign In and Lost Password with invalid data","","Thu Jul 24 16:50:41 CEST 2025","passed","Thu Jul 24 16:50:47 CEST 2025","","SignIn.spec.ts","",""
+"","3330","API‑001 - Verify REST API documentation page and method blocks","","Thu Jul 24 16:50:38 CEST 2025","passed","Thu Jul 24 16:50:41 CEST 2025","REST API navigation and visibility test","RestAPI.spec.ts","",""
+"","2773","Filter issues by ""Resolved"" status","","Thu Jul 24 16:50:38 CEST 2025","passed","Thu Jul 24 16:50:41 CEST 2025","","FilterByStatus.spec.ts","",""
+"","1428","API‑001 - Check navigation of breadcrumbs","","Thu Jul 24 16:50:42 CEST 2025","passed","Thu Jul 24 16:50:43 CEST 2025","REST API navigation and visibility test","RestAPI.spec.ts","",""
+"","2842","DL-001 - Verify latest release download link saves to disk and file exists","","Thu Jul 24 16:50:38 CEST 2025","passed","Thu Jul 24 16:50:41 CEST 2025","","Download.spec.ts","",""
+"","2962","SEARCH-001 - Verify search in news and wiki pages titles","","Thu Jul 24 16:50:38 CEST 2025","passed","Thu Jul 24 16:50:41 CEST 2025","","Search.spec.ts","",""
