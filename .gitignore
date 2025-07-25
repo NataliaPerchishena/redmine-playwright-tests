@@ -4,3 +4,4 @@ allure-results/
 allure-report/
 public/
 
+node_modules/
