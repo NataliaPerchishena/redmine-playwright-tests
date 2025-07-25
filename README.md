@@ -1,6 +1,6 @@
 # Playwright Tests for Redmine
 
-This repository contains a set of Playwright-based automated UI tests for the Redmine (https://www.redmine.org) project.
+This repository contains a set of Playwright-based automated tests for the Redmine (https://www.redmine.org) project.
 
 ## Features
 
