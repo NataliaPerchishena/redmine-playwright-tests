@@ -1,12 +1,9 @@
-import { test, expect } from '@playwright/test';
-import { HomePage } from '../pages/HomePage';
-import { SignInPage } from '../pages/SignInPage';
-import { LostPasswordPage } from '../pages/LostPasswordPage';
+import { test, expect } from '../tests/fixtures';
 
-test('AUTH-001 - Check Sign In and Lost Password with invalid data', async ({ page }) => {
-  const homePage = new HomePage(page);
-  const signInPage = new SignInPage(page);
-  const lostPasswordPage = new LostPasswordPage(page);
+test('AUTH-001 - Check Sign In and Lost Password with invalid data', async ({ page,
+  homePage,
+  signInPage,
+  lostPasswordPage, }) => {
 
   await page.goto('https://www.redmine.org/');
   await homePage.clickSignIn();

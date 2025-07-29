@@ -1,18 +1,10 @@
-import { test, expect } from '@playwright/test';
-import { HomePage } from '../pages/HomePage';
-import { DeveloperGuidePage } from '../pages/DeveloperGuidePage';
-import { RestApiPage } from '../pages/RestApiPage';
-import { ProjectsApiPage } from '../pages/ProjectsApiPage';
+import { test, expect } from '../tests/fixtures';
 
 test.describe('REST API navigation and visibility test', () => {
-  test('API‑001 - Verify REST API documentation page and method blocks', async ({ page }) => {
-    const homePage = new HomePage(page);
-    const guidePage = new DeveloperGuidePage(page);
-    const restApiPage = new RestApiPage(page);
-    const projectsApiPage = new ProjectsApiPage(page);
-
+  test('API‑001 - Verify REST API documentation page and method blocks', async ({ page, homePage, guidePage, restApiPage, projectsApiPage }) => {
+  
     await homePage.goto();
- await expect(homePage.headerH1).toContainText('Redmine');
+    await expect(homePage.headerH1).toContainText('Redmine');
 
     await homePage.navigateToDeveloperGuide();
     await expect(page).toHaveURL(/.*Guide/);
@@ -28,52 +20,49 @@ test.describe('REST API navigation and visibility test', () => {
       await expect(section).toBeVisible();
     }
 
-await expect(projectsApiPage.parametersBlocks.first()).toBeVisible();
-await expect(projectsApiPage.responseBlocks.first()).toBeVisible();
+    await expect(projectsApiPage.parametersBlocks.first()).toBeVisible();
+    await expect(projectsApiPage.responseBlocks.first()).toBeVisible();
 
-for (const section of projectsApiPage.sectionLocators) {
-  const preBlock = projectsApiPage.getPreBlockAfterSection(section);
-  await expect(preBlock).toBeVisible();
-}
+    for (const section of projectsApiPage.sectionLocators) {
+      const preBlock = projectsApiPage.getPreBlockAfterSection(section);
+      await expect(preBlock).toBeVisible();
 
-    await expect(projectsApiPage.tocSidebar).toBeVisible();
+      await expect(projectsApiPage.tocSidebar).toBeVisible();
+      await projectsApiPage.scrollToUpdatingProjectViaSidebar();
+      await expect(projectsApiPage.updatingProjectSection).toBeInViewport();
+    };
+    })
 
-    await projectsApiPage.scrollToUpdatingProjectViaSidebar();
-    await expect(projectsApiPage.updatingProjectSection).toBeInViewport();
-  });
+    test('API‑001 - Check navigation of breadcrumbs', async ({ page, projectsApiPage }) => {
+      await page.goto('https://www.redmine.org/projects/redmine/wiki/Rest_Projects');
+      await expect(projectsApiPage.breadcrumb).toBeVisible();
 
+      const initialN = 3;
 
-test('API‑001 - Check navigation of breadcrumbs', async ({ page }) => {
-  await page.goto('https://www.redmine.org/projects/redmine/wiki/Rest_Projects');
+      let breadcrumbLinks = projectsApiPage.breadcrumbLinks;
+      await expect(breadcrumbLinks).toHaveCount(initialN);
+      // const initialCount = await breadcrumbLinks.count();
+      // expect(initialCount).toBeGreaterThan(0);
 
-  const breadcrumb = page.locator('p.breadcrumb');
-  await expect(breadcrumb).toBeVisible();
+      const lastLink1 = breadcrumbLinks.nth(initialN - 1);
+      const href1 = await lastLink1.getAttribute('href');
+      await lastLink1.click();
 
-  const initialN = 3;
+      await expect(page).toHaveURL(new RegExp(`${href1}$`));
 
-  let breadcrumbLinks = breadcrumb.locator('a');
-  await expect(breadcrumbLinks).toHaveCount(initialN);
-  // const initialCount = await breadcrumbLinks.count();
-  // expect(initialCount).toBeGreaterThan(0);
+      const breadcrumbAfter1 = page.locator('p.breadcrumb a');
+      await expect(breadcrumbAfter1).toHaveCount(initialN - 1);
 
-  const lastLink1 = breadcrumbLinks.nth(initialN - 1);
-  const href1 = await lastLink1.getAttribute('href');
-  await lastLink1.click();
+      const lastLink2 = breadcrumbAfter1.nth(initialN - 2);
+      const href2 = await lastLink2.getAttribute('href');
+      await lastLink2.click();
 
-  await expect(page).toHaveURL(new RegExp(`${href1}$`));
+      await expect(page).toHaveURL(new RegExp(`${href2}$`));
 
-  const breadcrumbAfter1 = page.locator('p.breadcrumb a');
-  await expect(breadcrumbAfter1).toHaveCount(initialN - 1);
-
-  const lastLink2 = breadcrumbAfter1.nth(initialN - 2);
-  const href2 = await lastLink2.getAttribute('href');
-  await lastLink2.click();
-
-  await expect(page).toHaveURL(new RegExp(`${href2}$`));
-
-  const breadcrumbAfter2 = page.locator('p.breadcrumb a');
-  await expect(breadcrumbAfter2).toHaveCount(initialN - 2);
-});
+      const breadcrumbAfter2 = page.locator('p.breadcrumb a');
+      await expect(breadcrumbAfter2).toHaveCount(initialN - 2);
+    });
+  })
 
 //   test.describe.skip('Home page base tests', () => {
 //   let home: HomePage;
@@ -96,8 +85,5 @@ test('API‑001 - Check navigation of breadcrumbs', async ({ page }) => {
 //   });
     
 // });
-
-});
-
 
 

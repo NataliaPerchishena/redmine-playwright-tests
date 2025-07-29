@@ -1,12 +1,10 @@
-import { test, expect } from '@playwright/test';
-import { DownloadPage } from '../pages/DownloadPage';
+import { test, expect } from '../tests/fixtures';
 // Додано для роботи з файловою системою
 import * as fs from 'fs';
 import * as path from 'path';
 
-test('DL-001 - Verify latest release download link saves to disk and file exists', async ({ page }) => {
+test('DL-001 - Verify latest release download link saves to disk and file exists', async ({ page, downloadPage }) => {
   const latestRelease = 'redmine-6.0.6';
-  const downloadPage = new DownloadPage(page);
 
   await downloadPage.goto();
 

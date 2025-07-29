@@ -1,8 +1,6 @@
-import { test, expect } from '@playwright/test';
-import { IssuesPage } from '../pages/IssuesPage';
+import { test, expect } from '../tests/fixtures';
 
-test('Filter issues by "Resolved" status', async ({ page }) => {
-  const issuesPage = new IssuesPage(page);
+test('Filter issues by "Resolved" status', async ({ page, issuesPage }) => {
   await issuesPage.goto();
 
   const statusToFilter = 'Resolved';

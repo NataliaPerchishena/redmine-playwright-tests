@@ -12,13 +12,12 @@ export class ProjectsApiPage {
   readonly archivingProjectSection: Locator;
   readonly unarchivingProjectSection: Locator;
   readonly deletingProjectSection: Locator;
-
   readonly parametersBlocks: Locator;
   readonly responseBlocks: Locator;
-
   readonly tocSidebar: Locator;
   readonly updatingProjectTocLink: Locator;
-
+  readonly breadcrumb: Locator;
+  readonly breadcrumbLinks: Locator;
   constructor(page: Page) {
     this.page = page;
 
@@ -29,6 +28,8 @@ export class ProjectsApiPage {
     this.archivingProjectSection = page.getByRole('heading', { name: 'Archiving a project', exact: true });
     this.unarchivingProjectSection = page.locator('h2', { hasText: 'Unarchiving a project' });
     this.deletingProjectSection = page.locator('h2', { hasText: 'Deleting a project' });
+    this.breadcrumb = page.locator('p.breadcrumb');
+    this.breadcrumbLinks = this.breadcrumb.locator('a');
 
     this.sectionLocators = [
       this.listingProjectsSection,
